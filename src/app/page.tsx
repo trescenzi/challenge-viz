@@ -25,12 +25,8 @@ export default async function Home() {
   const gdata = await getSheetData("ROWS");
   return (
     <main style={{height: '100vh'}}>
-      <div style={{height: '500px'}}>
-        <CheckinTimeRangeForm data={gdata} />
-      </div>
-      <div style={{height: '500px'}}>
-        <WeekHeatMap data={gdata} />
-      </div>
+      <CheckinTimeRangeForm data={gdata} />
+      <WeekHeatMap data={gdata} />
     </main>
   );
 }

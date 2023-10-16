@@ -6,7 +6,8 @@ export const Calendar = ({
   data
 }: {
   data: CalendarData
-}) => <ResponsiveTimeRange
+}) => <div style={{height: 500}}>
+<ResponsiveTimeRange
         data={data.data}
         from={data.from}
         to={data.to}
@@ -29,3 +30,4 @@ export const Calendar = ({
             }
         ]}
     />
+</div>

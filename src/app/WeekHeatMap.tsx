@@ -27,37 +27,39 @@ export const WeekHeatMap = ({data}: {data: Data}) => {
     <label htmlFor="weekSelect">
       Week:
     </label>
-    <select id="weekSelect" defaultValue={week} value={week} onChange={(e) => setWeek(e.target.value)}>
+    <select id="weekSelect" value={week} defaultValue={week} onChange={(e) => setWeek(e.target.value)}>
       {weeks.map(week => <option key={week} value={week}>{getWeekStartDate(parseInt(week))}</option>)}
     </select>
-    <ResponsiveHeatMap
-      data={weekData}
-      axisTop={{
-        tickSize: 5,
-        tickPadding: 5,
-        tickRotation: -90,
-        legend: '',
-        legendOffset: 46
-      }}
-      xInnerPadding={.1}
-      yInnerPadding={.1}
-      isInteractive={false}
-      margin={{ top: 60, right: 90, bottom: 60, left: 90 }}
-      colors={{
-        type: 'sequential',
-        scheme: 'greens',
-        minValue: 0,
-        maxValue: 1
-      }}
-      enableLabels={false}
-      emptyColor="#FFF"
-      axisLeft={{
-        tickSize: 5,
-        tickPadding: 5,
-        tickRotation: 0,
-        legend: '',
-        legendOffset: 70
-      }}
-    />
+    <div style={{height: 500}}>
+      <ResponsiveHeatMap
+        data={weekData}
+        axisTop={{
+          tickSize: 5,
+          tickPadding: 5,
+          tickRotation: -90,
+          legend: '',
+          legendOffset: 46
+        }}
+        xInnerPadding={.1}
+        yInnerPadding={.1}
+        isInteractive={false}
+        margin={{ top: 60, right: 90, bottom: 60, left: 90 }}
+        colors={{
+          type: 'sequential',
+          scheme: 'greens',
+          minValue: 0,
+          maxValue: 1
+        }}
+        enableLabels={false}
+        emptyColor="#FFF"
+        axisLeft={{
+          tickSize: 5,
+          tickPadding: 5,
+          tickRotation: 0,
+          legend: '',
+          legendOffset: 70
+        }}
+      />
+    </div>
   </>
 }
