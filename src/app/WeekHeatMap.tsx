@@ -21,15 +21,16 @@ export const WeekHeatMap = ({data}: {data: Data}) => {
   const weekHeatmaps = dataToHeatmapData(data);
   const weeks = Object.keys(weekHeatmaps).sort();
   const [week, setWeek] = useState(weeks[weeks.length - 1])
+  console.log(weekHeatmaps);
   //@ts-ignore TODO
   const weekData = weekHeatmaps[week];
   return <>
-    <label>
+    <label htmlFor="weekSelect">
       Week:
-      <select value={week} onChange={(e) => setWeek(e.target.value)}>
-        {weeks.map(week => <option value={week}>{getWeekStartDate(parseInt(week))}</option>)}
-      </select>
     </label>
+    <select id="weekSelect" defaultValue={week} value={week} onChange={(e) => setWeek(e.target.value)}>
+      {weeks.map(week => <option key={week} value={week}>{getWeekStartDate(parseInt(week))}</option>)}
+    </select>
     <ResponsiveHeatMap
       data={weekData}
       axisTop={{

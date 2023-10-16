@@ -20,9 +20,17 @@ async function getSheetData(
       rows: gdata.values.slice(1),
     }))
 }
-
 export default async function Home() {
   const gdata = await getSheetData("ROWS");
+  // google sheets returns dates formatted and safari won't parse them
+  // so instead of using a real database we preprocess all the dates in an
+  // environment which will parse these dates because js is insane.
+  const timeIndex = gdata.headers.indexOf('time');
+  gdata.rows = gdata.rows.map(row => {
+    const isoDate = new Date(row[timeIndex]+'Z');
+    row.splice(timeIndex, 1, isoDate.toISOString());
+    return row;
+  });
   return (
     <main style={{height: '100vh'}}>
       <CheckinTimeRangeForm data={gdata} />

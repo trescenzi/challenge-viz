@@ -61,6 +61,7 @@ export const dataToHeatmapData = (data: Data) => {
   const nameIndex = data.headers.indexOf('Name');
   const groupedByWeeks = groupBy(data.rows, timeIndex, getWeekNumber);
   const names = getNames(data);
+  console.log('grouped by weeks', groupedByWeeks);
   const weeksGroupedByWeekday = Object.keys(groupedByWeeks).reduce((groups, week) => ({
     ...groups,
     [week]: groupBy(
@@ -91,5 +92,9 @@ function getWeekNumber(isoDate: string): number {
   date.setHours(0, 0, 0, 0);
   date.setDate(date.getDate() + 3 - ((date.getDay() + 6) % 7));
   const week1 = new Date(date.getFullYear(), 0, 4);
-  return Math.ceil((((date.getTime() - week1.getTime()) / 86400000) + 1) / 7);
+  const num = Math.ceil((((date.getTime() - week1.getTime()) / 86400000) + 1) / 7);
+  if (isNaN(num)) {
+    console.log(isoDate);
+  }
+  return num;
 }
