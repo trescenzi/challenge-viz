@@ -20,6 +20,15 @@ async function getSheetData(
       rows: gdata.values.slice(1),
     }))
 }
+
+function convertToIsoDate(dateString: string): string {
+  const [datePart, timePart] = dateString.split(' ');
+  const [year, month, day] = datePart.split('-');
+  const [hour, minute, second] = timePart.split(':');
+
+  return `${year}-${month}-${day}T${hour.padStart(2,'0')}:${minute.padStart(2, '0')}:${second.padStart(2, '0')}Z`;
+}
+
 export default async function Home() {
   const gdata = await getSheetData("ROWS");
   // google sheets returns dates formatted and safari won't parse them
@@ -27,16 +36,7 @@ export default async function Home() {
   // environment which will parse these dates because js is insane.
   const timeIndex = gdata.headers.indexOf('time');
   gdata.rows = gdata.rows.map(row => {
-    const newRow = Array.from(row);
-    try {
-      const isoDate = new Date(row[timeIndex]+'Z');
-      const dateString = isoDate.toISOString();
-      if (dateString && dateString.length) {
-        newRow.splice(timeIndex, 1, dateString);
-      }
-      return newRow;
-    } catch(e) {
-    }
+    row.splice(timeIndex, 1, convertToIsoDate(row[timeIndex]));
     return row;
   });
   return (
