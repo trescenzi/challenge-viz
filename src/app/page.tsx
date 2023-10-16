@@ -35,10 +35,12 @@ export default async function Home() {
   // so instead of using a real database we preprocess all the dates in an
   // environment which will parse these dates because js is insane.
   const timeIndex = gdata.headers.indexOf('time');
-  gdata.rows = gdata.rows.map(row => {
-    row.splice(timeIndex, 1, convertToIsoDate(row[timeIndex]));
-    return row;
-  });
+  if (timeIndex !== -1 && gdata.rows?.length > 0) {
+    gdata.rows = gdata.rows.map(row => {
+      row.splice(timeIndex, 1, convertToIsoDate(row[timeIndex]));
+      return row;
+    });
+  }
   return (
     <main style={{height: '100vh'}}>
       <CheckinTimeRangeForm data={gdata} />
