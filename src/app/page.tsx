@@ -21,26 +21,8 @@ async function getSheetData(
     }))
 }
 
-function convertToIsoDate(dateString: string): string {
-  const [datePart, timePart] = dateString.split(' ');
-  const [year, month, day] = datePart.split('-');
-  const [hour, minute, second] = timePart.split(':');
-
-  return `${year}-${month}-${day}T${hour.padStart(2,'0')}:${minute.padStart(2, '0')}:${second.padStart(2, '0')}Z`;
-}
-
 export default async function Home() {
   const gdata = await getSheetData("ROWS");
-  // google sheets returns dates formatted and safari won't parse them
-  // so instead of using a real database we preprocess all the dates in an
-  // environment which will parse these dates because js is insane.
-  const timeIndex = gdata.headers.indexOf('time');
-  if (timeIndex !== -1 && gdata.rows?.length > 0) {
-    gdata.rows = gdata.rows.map(row => {
-      row.splice(timeIndex, 1, convertToIsoDate(row[timeIndex]));
-      return row;
-    });
-  }
   return (
     <main style={{height: '100vh'}}>
       <CheckinTimeRangeForm data={gdata} />
