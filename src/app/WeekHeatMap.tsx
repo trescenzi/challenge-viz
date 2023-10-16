@@ -21,7 +21,6 @@ export const WeekHeatMap = ({data}: {data: Data}) => {
   const weekHeatmaps = dataToHeatmapData(data);
   const weeks = Object.keys(weekHeatmaps).sort();
   const [week, setWeek] = useState(weeks[weeks.length - 1])
-  console.log(weekHeatmaps);
   //@ts-ignore TODO
   const weekData = weekHeatmaps[week];
   return <>

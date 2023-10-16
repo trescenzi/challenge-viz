@@ -27,8 +27,12 @@ export default async function Home() {
   // environment which will parse these dates because js is insane.
   const timeIndex = gdata.headers.indexOf('time');
   gdata.rows = gdata.rows.map(row => {
-    const isoDate = new Date(row[timeIndex]+'Z');
-    row.splice(timeIndex, 1, isoDate.toISOString());
+    try {
+      const isoDate = new Date(row[timeIndex]+'Z');
+      const dateString = isoDate.toISOString();
+      row.splice(timeIndex, 1, dateString);
+    } catch(e) {
+    }
     return row;
   });
   return (
