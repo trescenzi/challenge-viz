@@ -30,7 +30,9 @@ export default async function Home() {
     try {
       const isoDate = new Date(row[timeIndex]+'Z');
       const dateString = isoDate.toISOString();
-      row.splice(timeIndex, 1, dateString);
+      if (dateString && dateString.length) {
+        row.splice(timeIndex, 1, dateString);
+      }
     } catch(e) {
     }
     return row;
